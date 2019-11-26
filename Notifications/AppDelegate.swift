@@ -63,6 +63,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print("Notification settings: \(settings)")
         }
     }
+    
 
 }
 
