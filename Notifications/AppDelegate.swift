@@ -69,11 +69,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func scheduelNotification(notificationType: String) {
         
         let content = UNMutableNotificationContent()
+        let userAction = "User Action"
         
         content.title = notificationType
         content.body = "This is example how to create \(notificationType)"
         content.sound = UNNotificationSound.default
         content.badge = 1
+        content.categoryIdentifier = userAction
         
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
         
@@ -86,6 +88,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 print("ERROR: \(error.localizedDescription)")
             }
         }
+        let snoozeAction = UNNotificationAction(identifier: "Snooze", title: "Snooze", options: [])
+        let deleteAction = UNNotificationAction(identifier: "Delete", title: "Delete", options: [.destructive])
+        let BuyAction = UNNotificationAction(identifier: "Buy", title: "Buy", options: [])
+        let sellAction = UNNotificationAction(identifier: "Sell", title: "Sell", options: [])
+        let category = UNNotificationCategory(
+            identifier: userAction,
+            actions: [snoozeAction, deleteAction, BuyAction, sellAction],
+            intentIdentifiers: [],
+            options: [])
+        notificationCenter.setNotificationCategories([category])
     }
 
 }
@@ -104,9 +116,29 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             print("Handling notification with the local notification identifire")
         }
         
+        switch response.actionIdentifier {
+        case UNNotificationDismissActionIdentifier:
+            print("Dismiss Action")
+        case UNNotificationDefaultActionIdentifier:
+            print("Default")
+            
+        case "Snooze":
+            print("Snooze")
+            scheduelNotification(notificationType: "Reminder")
+        case "Delete":
+            print("Delete")
+        case "Buy":
+            print("Buy")
+        case "Sell":
+            print ("Sell")
+        default:
+            print(response.actionIdentifier)
+        }
+        
         completionHandler()
         
     }
+    
     
 }
 
