@@ -8,7 +8,11 @@
 
 import UIKit
 
-class TableViewController: UITableViewController {
+protocol goToVc {
+    func goTo()
+}
+
+class TableViewController: UITableViewController, goToVc {
     
     let appDelegate = UIApplication.shared.delegate as? AppDelegate
     
@@ -18,6 +22,14 @@ class TableViewController: UITableViewController {
                          "Push Notification with  APNs",
                          "Push Notification with Firebase",
                          "Push Notification with Content"]
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        print(#function, #line)
+        
+        if let myAppDelegate = appDelegate {
+            myAppDelegate.delegate = self
+        }
+    }
 
     // MARK: - Table view data source
 
@@ -58,5 +70,10 @@ class TableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath)
         cell?.textLabel?.textColor = .white
+    }
+    func goTo() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let dvc = storyboard.instantiateViewController(withIdentifier: "view")
+        present(dvc, animated: true, completion: nil)
     }
 }

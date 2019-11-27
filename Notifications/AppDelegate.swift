@@ -9,10 +9,13 @@
 import UIKit
 import UserNotifications
 
+
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var delegate: TableViewController?
     
     let notificationCenter = UNUserNotificationCenter.current()
     
@@ -22,36 +25,42 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         requestAutorization()
         notificationCenter.delegate = self
-
+        print(#function, #line)
         return true
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
+        print(#function, #line)
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
+        print(#function, #line)
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
+        print(#function, #line)
         // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
+        print(#function, #line)
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
         UIApplication.shared.applicationIconBadgeNumber = 0
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
+        print(#function, #line)
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
     
     //NOTIFICATION CENTER METHODS
 
     func requestAutorization() {
+        print(#function, #line)
         notificationCenter.requestAuthorization(options: [.alert, .badge, .sound]) { (granted, error) in
             
             print("Permission granted: \(granted)")
@@ -61,12 +70,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func getNotificationSettings() {
+        print(#function, #line)
         notificationCenter.getNotificationSettings { (settings) in
             print("Notification settings: \(settings)")
         }
     }
     
     func scheduelNotification(notificationType: String) {
+        print(#function, #line)
         
         let content = UNMutableNotificationContent()
         let userAction = "User Action"
@@ -105,12 +116,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 extension AppDelegate: UNUserNotificationCenterDelegate {
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+
+        print(#function, #line)
         
         completionHandler([.alert, .sound])
         
     }
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        
+        print(#function, #line)
         
         if response.notification.request.identifier == "Local notification" {
             print("Handling notification with the local notification identifire")
@@ -121,7 +136,9 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             print("Dismiss Action")
         case UNNotificationDefaultActionIdentifier:
             print("Default")
-            
+            delegate?.view.backgroundColor = .green
+            print(delegate)
+            delegate?.goTo()
         case "Snooze":
             print("Snooze")
             scheduelNotification(notificationType: "Reminder")
@@ -129,6 +146,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             print("Delete")
         case "Buy":
             print("Buy")
+            delegate?.goTo()
         case "Sell":
             print ("Sell")
         default:
@@ -138,7 +156,5 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         completionHandler()
         
     }
-    
-    
 }
 
