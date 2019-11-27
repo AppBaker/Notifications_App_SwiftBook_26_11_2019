@@ -15,6 +15,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9941ECEF238E138A00734682 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		A8217DDC20DBD56300895832 /* Notifications.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Notifications.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A8217DDF20DBD56300895832 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A8217DE420DBD56300895832 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -38,6 +39,7 @@
 		A8217DD320DBD56300895832 = {
 			isa = PBXGroup;
 			children = (
+				9941ECEF238E138A00734682 /* README.md */,
 				A8217DDE20DBD56300895832 /* Notifications */,
 				A8217DDD20DBD56300895832 /* Products */,
 			);
